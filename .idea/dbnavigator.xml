@@ -34,8 +34,8 @@ CREATE TABLE products (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100),
     price INT,
-    seller_id INT REFERENCES users(id),
-    is_sold BOOLEAN DEFAULT FALSE
+    sellid INT REFERENCES users(id),
+    sold BOOLEAN DEFAULT FALSE
 );]]></console>
     </connection>
   </component>
