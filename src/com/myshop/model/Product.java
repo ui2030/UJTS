@@ -4,19 +4,19 @@ public class Product {
     private int id;
     private String name;
     private int price;
-    private int sellId;
-    private boolean sold;
+    private int sellerId;
+    private boolean is_sold;
 
     // 생성자
-    public Product(int id, String name, int price, int sellId, boolean sold) {
+    public Product(int id, String name, int price, int seller_Id, boolean is_sold) {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.sellId = sellId;
-        this.sold = sold;
+        this.sellerId = seller_Id;
+        this.is_sold = is_sold;
     }
 
-    // ✅ getter 메서드들 추가
+    // getter 메서드들 추가
     public int getId() {
         return id;
     }
@@ -26,11 +26,11 @@ public class Product {
     public int getPrice() {
         return price;
     }
-    public int getSellId() {
-        return sellId;
+    public int getSellerId() {
+        return sellerId;
     }
-    public boolean sold() {
-        return sold;
+    public boolean isSold() {
+        return is_sold;
     }
 
     // 선택: setter도 만들면 좋음
@@ -38,6 +38,6 @@ public class Product {
         this.price = price;
     }
     public void setSold(boolean sold) {
-        this.sold = sold;
+        this.is_sold = sold;
     }
 }

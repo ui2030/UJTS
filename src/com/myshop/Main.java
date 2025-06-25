@@ -3,8 +3,9 @@ package com.myshop;
     프론트 엔드 & 객체 조립
  */
 import com.myshop.dao.ProductDAO;
+import com.myshop.dao.UserDAO;
 import com.myshop.model.Product;
-
+import com.myshop.model.User;
 import java.util.List;
 import java.util.Scanner;
 
@@ -28,18 +29,57 @@ public class Main {
             switch (menu) {
                 case 1:
                     System.out.println("[상품 등록] (0: 뒤로가기)");
+
                     System.out.print("상품 이름: ");
                     String name = sc.nextLine();
                     if (name.equals("0")) break;
 
-                    System.out.print("가격: ");
-                    int price = sc.nextInt();
+                    // 가격 입력 (숫자만 허용, 0: 뒤로가기)
+                    int price = 0;
+                    while (true) {
+                        System.out.print("가격을 입력해주세요 (0: 뒤로가기): ");
+                        String input = sc.nextLine();
+
+                        try {
+                            price = Integer.parseInt(input);
+                            if (price == 0) break;
+                            System.out.printf("입력된 가격: %,d원\n", price);
+                            break;
+                        } catch (NumberFormatException e) {
+                            System.out.println("❌ 숫자만 입력해주세요.");
+                        }
+                    }
                     if (price == 0) break;
 
-                    System.out.print("판매자 ID: ");
-                    int sellerId = sc.nextInt();
+                    //판매자 ID 입력 → 기존 ID 존재하면 다시 입력
+                    int sellerId = 0;
+                    UserDAO userDAO = new UserDAO();
+                    while (true) {
+                        System.out.print("판매자 ID 입력 (0: 뒤로가기): ");
+                        String sellerInput = sc.nextLine();
+
+                        try {
+                            sellerId = Integer.parseInt(sellerInput);
+                            if (sellerId == 0) break;
+
+                            if (userDAO.exists(sellerId)) {
+                                System.out.println("이미 존재하는 사용자입니다. 다른 ID를 입력하세요.");
+                                continue;
+                            }
+
+                            // 새 사용자 등록
+                            System.out.print("새 사용자 이름 입력: ");
+                            String username = sc.nextLine();
+                            userDAO.insert(new User(sellerId, username, 1000));
+                            break;
+
+                        } catch (NumberFormatException e) {
+                            System.out.println("숫자만 입력해주세요.");
+                        }
+                    }
                     if (sellerId == 0) break;
 
+                    // 상품 등록
                     Product newProduct = new Product(0, name, price, sellerId, false);
                     dao.buy(newProduct);
                     break;
@@ -51,9 +91,9 @@ public class Main {
                         System.out.println("등록된 상품이 없습니다.");
                     } else {
                         for (Product p : list) {
-                            System.out.printf("ID:%d | 이름:%s | 가격:%d | 판매자:%d | 상태:%s\n",
-                                    p.getId(), p.getName(), p.getPrice(), p.getSellId(),
-                                    p.sold() ? "판매완료" : "판매중");
+                            System.out.printf("ID:%d | 이름:%s | 가격:%d원 | 판매자:%d | 상태:%s\n",
+                                    p.getId(), p.getName(), p.getPrice(), p.getSellerId(),
+                                    p.isSold() ? "판매완료" : "판매중");
                         }
                     }
                     break;
@@ -66,7 +106,8 @@ public class Main {
 
                     System.out.print("새 가격: ");
                     int newPrice = sc.nextInt();
-                    if (newPrice == 0) break;
+                    if (newPrice == 0)
+                        break;
 
                     Product updateProduct = new Product(upId, null, newPrice, 0, false);
                     dao.update(updateProduct);
@@ -76,7 +117,8 @@ public class Main {
                     System.out.println("[판매 종료] (0: 뒤로가기)");
                     System.out.print("판매 종료할 상품 ID: ");
                     int delId = sc.nextInt();
-                    if (delId == 0) break;
+                    if (delId == 0)
+                        break;
 
                     dao.sell(delId);
                     break;

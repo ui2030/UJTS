@@ -13,18 +13,17 @@ import java.util.List;
 public class ProductDAO implements Buy,Read,Update,Sell,Exit {
     @Override
     public void buy(Product p) {
-        String sql = "INSERT INTO products (name, price, sellid, sold) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO products (name, price, seller_id, is_sold) VALUES (?, ?, ?, ?)";
 
         try(Connection conn = DBUtil.getConnection();
         PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, p.getName());
             ps.setInt(2, p.getPrice());
-            ps.setInt(3, p.getSellId());
-            ps.setBoolean(4, false);
+            ps.setInt(3, p.getSellerId());
+            ps.setBoolean(4, p.isSold());
             
             ps.executeUpdate();
-            System.out.println(" 상품을 구매하셨습니다.");
 
         } catch (SQLException e) {
             System.out.println("구매 실패\n사유: " + e.getMessage());
@@ -44,8 +43,8 @@ public class ProductDAO implements Buy,Read,Update,Sell,Exit {
                         rs.getInt("id"),
                         rs.getString("name"),
                         rs.getInt("price"),
-                        rs.getInt("sellid"),
-                        rs.getBoolean("sold")
+                        rs.getInt("seller_id"),
+                        rs.getBoolean("is_sold")
                 );
                 list.add(p);
             }
@@ -79,7 +78,7 @@ public class ProductDAO implements Buy,Read,Update,Sell,Exit {
     
     @Override
     public void sell(int id) {
-        String sql = "UDATE products SET sold = true WHERE id = ?";
+        String sql = "UPDATE products SET is_sold = true WHERE id = ?";
         
         try (Connection conn = DBUtil.getConnection();
         PreparedStatement ps = conn.prepareStatement(sql)) {

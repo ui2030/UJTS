@@ -34,9 +34,14 @@ CREATE TABLE products (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100),
     price INT,
-    sellid INT REFERENCES users(id),
-    sold BOOLEAN DEFAULT FALSE
-);]]></console>
+    seller_id INT REFERENCES users(id),
+    is_sold BOOLEAN DEFAULT FALSE
+);
+
+--ALTER TABLE products RENAME COLUMN seller_id TO sellid;
+
+
+DROP TABLE IF EXISTS products, users;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
@@ -44,14 +49,17 @@ CREATE TABLE products (
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files>
+      <object connection-id="7950e244-a9c3-48e8-8218-9440b1b3b00e" object-ref="schemas/public/tables/products" />
       <object connection-id="7950e244-a9c3-48e8-8218-9440b1b3b00e" object-ref="consoles/Connection" />
+      <object connection-id="7950e244-a9c3-48e8-8218-9440b1b3b00e" object-ref="schemas/public/tables/users" />
     </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="7950e244-a9c3-48e8-8218-9440b1b3b00e" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
-    <filter-actions connection-id="7950e244-a9c3-48e8-8218-9440b1b3b00e" dataset="public.products" active-filter-id="" />
+    <filter-actions connection-id="7950e244-a9c3-48e8-8218-9440b1b3b00e" dataset="public.users" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="7950e244-a9c3-48e8-8218-9440b1b3b00e" dataset="public.products" active-filter-id="EMPTY_FILTER" />
   </component>
   <component name="DBNavigator.Project.ExecutionManager">
     <retain-sticky-names value="false" />
@@ -508,7 +516,7 @@ CREATE TABLE products (
         <uncommitted-changes>
           <on-project-close value="COMMIT" />
           <on-disconnect value="ASK" />
-          <on-autocommit-toggle value="ASK" />
+          <on-autocommit-toggle value="COMMIT" />
         </uncommitted-changes>
         <multiple-uncommitted-changes>
           <on-commit value="ASK" />
