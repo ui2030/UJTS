@@ -50,6 +50,9 @@ CREATE TABLE products (
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="7950e244-a9c3-48e8-8218-9440b1b3b00e" />
   </component>
+  <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="7950e244-a9c3-48e8-8218-9440b1b3b00e" dataset="public.products" active-filter-id="" />
+  </component>
   <component name="DBNavigator.Project.ExecutionManager">
     <retain-sticky-names value="false" />
   </component>
