@@ -50,8 +50,8 @@ DROP TABLE IF EXISTS products, users;]]></console>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files>
       <object connection-id="7950e244-a9c3-48e8-8218-9440b1b3b00e" object-ref="schemas/public/tables/products" />
-      <object connection-id="7950e244-a9c3-48e8-8218-9440b1b3b00e" object-ref="consoles/Connection" />
       <object connection-id="7950e244-a9c3-48e8-8218-9440b1b3b00e" object-ref="schemas/public/tables/users" />
+      <object connection-id="7950e244-a9c3-48e8-8218-9440b1b3b00e" object-ref="consoles/Connection" />
     </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
