@@ -78,18 +78,18 @@ public class ProductDAO implements Buy,Read,Update,Sell,Exit {
     
     @Override
     public void sell(int id) {
-        String sql = "UPDATE products SET is_sold = true WHERE id = ?";
+        String sql = "UPDATE products SET is_sold = true, WHERE id = ?";
         
         try (Connection conn = DBUtil.getConnection();
         PreparedStatement ps = conn.prepareStatement(sql)) {
-            
+
             ps.setInt(1, id);
             
             int rows = ps.executeUpdate();
             if (rows > 0) {
                 System.out.println("구매해줘서 고맙네!");
             } else {
-                System.out.println("자네가 찾는 물건이 없네만 다른 상품도 둘러보시게나!");
+                System.out.println("자네가 찾는 물건이 없네만 다른 상품도 둘러보게");
             }
         } catch (SQLException e) {
             System.out.println("그 상품은 판매할 수가 없네.\n그 이유는" + e.getMessage() + "때문이지 자네가 이해하게");
